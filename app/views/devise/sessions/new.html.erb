@@ -1,0 +1,33 @@
+<div class="grid-x grid-margin-x">
+    <div class="small-4 small-offset-4 cell">
+        <h1 class="text-center">Log in</h1>
+        <hr>
+
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+
+            <label for="<%= resource_name %>_email">
+                <i class="fa fa-envelope"></i>
+                <%= f.email_field :email, autofocus: true, placeholder: 'Email Address', required: "required" %>
+                <span class="form-error" data-form-error-for="<%= resource_name %>_email">Your email is required.</span>
+            </label>
+
+            <label for="<%= resource_name %>_password">
+                <i class="fa fa-envelope"></i>
+                <%= f.password_field :password, autocomplete: "off", placeholder: 'Password', required: "required" %>
+                <span class="form-error" data-form-error-for="<%= resource_name %>_password">Your password is required.</span>
+            </label>
+
+            <% if devise_mapping.rememberable? -%>
+                <%= f.label :remember_me do %>
+                    <%= f.check_box :remember_me %>
+                <% end %>
+            <% end -%>
+
+            <%= f.submit "Log in", class: "button primary large expanded" %>
+        <% end %>
+
+        <div class="text-center">
+            <%= render "devise/shared/links" %>
+        </div>
+    </div>
+</div>

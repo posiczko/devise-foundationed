@@ -1,6 +1,6 @@
 *.rbc
 capybara-*.html
-.rspec
+
 /log
 /tmp
 /db/*.sqlite3
@@ -47,3 +47,14 @@ bower.json
 # Ignore node_modules
 node_modules/
 
+/.bundle/
+/.yardoc
+/_yardoc/
+/coverage/
+/doc/
+/pkg/
+/spec/reports/
+/tmp/
+
+# rspec failure tracking
+.rspec_status

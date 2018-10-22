@@ -1,0 +1,25 @@
+<div class="grid-x grid-margin-x">
+    <div class="small-4 small-offset-4 cell">
+        <h2 class="text-center">Resend confirmation instructions</h2>
+
+        <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
+            <%= devise_error_messages! %>
+
+
+            <%= f.label :email do %>
+                <i class="fa fa-envelope"></i>
+                <%= f.email_field :email, autofocus: true, value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) %>
+                <span class="form-error" data-form-error-for="<%= resource_name %>_email">Your email is required.</span>
+            <% end %>
+
+
+            <%= f.submit "Resend confirmation instructions", class: 'button primary expanded' %>
+
+        <% end %>
+
+        <div class="text-center">
+            <%= render "devise/shared/links" %>
+        </div>
+
+    </div>
+</div>
