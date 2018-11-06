@@ -1,7 +1,9 @@
 require "devise/foundationed/version"
+require "devise/generators/foundationed_generator"
 
 module Devise
   module Foundationed
-    # Your code goes here...
+    class Engine < ::Rails::Engine
+    end
   end
 end
