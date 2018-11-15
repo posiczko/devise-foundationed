@@ -1,29 +1,40 @@
 <div class="grid-x grid-margin-x">
     <div class="small-4 small-offset-4 cell">
         <h1 class="text-center">Log in</h1>
-        <hr>
 
-        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { "data-abide": true, novalidate: true }) do |f| %>
+
+            <div data-abide-error class="alert callout" style="display: none;">
+                <p><i class="fi-alert"></i> There are some errors in your form.</p>
+            </div>
 
             <label for="<%= resource_name %>_email">
-                <i class="fa fa-envelope"></i>
-                <%= f.email_field :email, autofocus: true, placeholder: 'Email Address', required: "required" %>
-                <span class="form-error" data-form-error-for="<%= resource_name %>_email">Your email is required.</span>
+                <div class="input-group">
+                    <span class="input-group-label"><i class="fa fa-envelope"></i></span>
+                    <%= f.email_field :email, autofocus: true, placeholder: 'Email Address', class: "input-group-field", required: "required", pattern: "email" %>
+                    <span class="form-error" data-form-error-for="<%= resource_name %>_email">Your email is required.</span>
+                </div>
             </label>
 
             <label for="<%= resource_name %>_password">
-                <i class="fa fa-envelope"></i>
-                <%= f.password_field :password, autocomplete: "off", placeholder: 'Password', required: "required" %>
-                <span class="form-error" data-form-error-for="<%= resource_name %>_password">Your password is required.</span>
+                <div class="input-group">
+                    <span class="input-group-label"><i class="fa fa-key"></i></span>
+                    <%= f.password_field :password, autocomplete: "off", placeholder: 'Password', class: "input-group-field", required: "required" %>
+                    <span class="form-error" data-form-error-for="<%= resource_name %>_password">Your password is required.</span>
+                </div>
             </label>
 
             <% if devise_mapping.rememberable? -%>
-                <%= f.label :remember_me do %>
+                <fieldset>
                     <%= f.check_box :remember_me %>
-                <% end %>
+                    <%= f.label :remember_me, "Remeber Me", for: :remember_me  %>
+                </fieldset>
             <% end -%>
 
-            <%= f.submit "Log in", class: "button primary large expanded" %>
+            <div class="input-group">
+                <%= f.submit "Log in", class: "button primary large expanded" %>
+            </div>
+
         <% end %>
 
         <div class="text-center">

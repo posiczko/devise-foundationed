@@ -1,36 +1,61 @@
 <div class="grid-x grid-margin-x">
     <div class="small-4 small-offset-4 cell">
-        <h1>Edit <%= resource_name.to_s.humanize %></h1>
-        <hr>
-        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-            <%= devise_error_messages! %>
+        <h1 class="text-center">Account</h1>
 
-            <%= f.label :email %><br/>
-            <%= f.email_field :email %>
-
-            <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-                <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, "data-abide": true, "novalidate": true }) do |f| %>
+            <% unless resource.errors.empty? %>
+                <div class="alert callout">
+                    <%= devise_error_messages! %>
+                </div>
             <% end %>
 
-            <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br/>
-            <%= f.password_field :password, autocomplete: "off" %>
+            <div data-abide-error class="alert callout text-center" style="display: none;">
+                <p><i class=""></i> There are some errors in your form.</p>
+            </div>
 
-            <%= f.label :password_confirmation %><br/>
-            <%= f.password_field :password_confirmation, autocomplete: "off" %>
+            <label for="<%= resource_name %>_name">
+                <%= f.text_field :name, autofocus: false, placeholder: "Full Name", required: "required", pattern: "text" %>
+                <span class="form-error" data-form-error-for="<%= resource_name %>_name">Your name is
+                        required.</span>
+            </label>
 
-            <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br/>
-            <%= f.password_field :current_password, autocomplete: "off" %>
+            <label for="<%= resource_name %>_email">
+                <%= f.email_field :email, placeholder: 'Email Address', required: "required", pattern: "email" %>
+                <span class="form-error" data-form-error-for="<%= resource_name %>_email">Your email is required.</span>
+            </label>
 
-            <%= f.submit "Update", class: 'button primary large' %>
+            <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+                <div class="alert callout">Currently waiting confirmation
+                    for: <%= resource.unconfirmed_email %></div>
+            <% end %>
 
+            <label for="<%= resource_name %>_password">
+                <%= f.password_field :password, autocomplete: "off", placeholder: 'Password' %>
+                <p class="form-text text-muted">
+                    <small>Leave password blank if you don't want to change it</small>
+                </p>
+            </label>
+
+            <label for="<%= resource_name %>_password_confirmation">
+                <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: 'Confirm Password', "data-equalto": "#{ resource_name }_password",
+                                     "data-validator":                     "min-length", "data-min-length": (@minimum_password_length || 1) %>
+                <span class="form-error" data-form-error-for="<%= resource_name %>_password_confirmation">Password must match and must be at least <%= pluralize(@minimum_password_length || 1, "character") %>
+                    . </span>
+            </label>
+
+
+            <%= f.password_field :current_password, autocomplete: "off", class: 'form-control', placeholder: 'Current Password' %>
+            <p class="form-text text-muted">
+                <small>We need your current password to confirm your changes</small>
+            </p>
+
+            <div class="form-group">
+                <%= f.submit "Save Changes", class: 'button large primary expanded' %>
+            </div>
         <% end %>
+
         <hr>
 
-        <h2>Cancel my account</h2>
-
-        <p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), class: "button danger", data: { confirm: "Are you sure? You cannot undo this." }, method: :delete %></p>
-
-        <%= link_to "Back", :back %>
-        <hr>
+        <p class="text-center"><%= link_to "Deactivate my account", registration_path(resource_name), data: { confirm: "Are you sure? You cannot undo this." }, method: :delete %></p>
     </div>
 </div>

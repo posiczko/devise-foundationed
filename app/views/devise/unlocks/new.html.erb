@@ -1,16 +1,33 @@
-<h2>Resend unlock instructions</h2>
+<div class="grid-x grid-margin-x">
+    <div class="small-4 small-offset-4 cell">
+        <h1 class="text-center">Resend unlock instructions</h1>
 
-<%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f| %>
-  <%= devise_error_messages! %>
+        <%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post, "data-abide": true, novalidate: true }) do |f| %>
+            <% unless resource.errors.empty? %>
+                <div class="alert callout">
+                    <%= devise_simple_error_messages! %>
+                </div>
+            <% end %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
+            <div data-abide-error class="alert callout" style="display: none;">
+                <p><i class="fi-alert"></i> There are some errors in your form.</p>
+            </div>
 
-  <div class="actions">
-    <%= f.submit "Resend unlock instructions" %>
-  </div>
-<% end %>
+            <label for="<%= resource_name %>_email">
+                <div class="input-group">
+                    <span class="input-group-label"><i class="fa fa-envelope"></i></span>
+                    <%= f.email_field :email, placeholder: 'Email Address', class: "input-group-field", required: "required", pattern: "email" %>
+                    <span class="form-error" data-form-error-for="<%= resource_name %>_email">Your email is required.</span>
+                </div>
+            </label>
 
-<%= render "devise/shared/links" %>
+            <div class="input-group">
+                <%= f.submit "Resend unlock instructions", class: "button primary large expanded" %>
+            </div>
+        <% end %>
+
+        <div class="text-center">
+            <%= render "devise/shared/links" %>
+        </div>
+    </div>
+</div>
